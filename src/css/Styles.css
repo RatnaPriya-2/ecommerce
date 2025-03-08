@@ -1,0 +1,67 @@
+* {
+  padding: 0;
+  margin: 0;
+}
+
+.home-container {
+  padding: 20px 50px;
+  max-width: 100vw;
+  max-height: 100vh;
+  display: flex;
+  justify-content: space-between;
+  position: relative;
+}
+.home {
+  
+  width: 40%;
+  text-align: left;
+  display: flex;
+  gap: 10px;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: center;
+}
+
+.home-img {
+  overflow: hidden;
+}
+.home p {
+  color: #333;
+}
+
+h1 {
+  color: #ff6f61;
+  margin-bottom: 10px;
+}
+
+.explore-btn {
+  padding: 10px 30px;
+  margin-top: 10px;
+  border: none;
+  border-radius: 5px;
+  color: white;
+  background-color: #80b483;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+.explore-btn:hover {
+  background-color: #689f6b;
+}
+
+.explore-btn a {
+  text-decoration: none;
+  color: white;
+}
+.about,
+.contact {
+  text-align: center;
+  padding: 20px;
+  color: #333;
+  margin-top: 50px;
+}
+
+.about p,
+.contact p {
+  padding: 8px 0px;
+  font-size: 18px;
+}
