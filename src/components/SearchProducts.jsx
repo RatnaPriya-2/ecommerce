@@ -15,11 +15,15 @@ const SearchProducts = () => {
     displayPage,
     pageProducts,
     showProducts,
+    visible,
   } = useGlobalContext();
-  console.log(filteredProducts, pageProducts,buttonList);
+  console.log(filteredProducts, pageProducts, buttonList);
 
   return (
     <div className="search-products-container">
+      <span className={`alert-message ${visible ? "visible" : ""}`}>
+        Item added to cart..
+      </span>
       <div className="search-block">
         <label htmlFor="search">Search for products</label>
         <div className="search-cluster">
@@ -39,19 +43,11 @@ const SearchProducts = () => {
               onClick={clearInput}
             />
           )}
-          <img src={pic} alt="" />
+          <img src={pic} alt="search" onClick={showProducts} />
         </div>
       </div>
       <div className="products-block">
         <div className="products-list">
-          {/* {filteredProducts.length > 0 ? (
-            filteredProducts.map((product) => (
-              <ProductCard key={product.id} product={product} />
-            ))
-          ) : (
-            <p>No products found..</p>
-          )} */}
-
           {pageProducts.length > 0 ? (
             pageProducts.map((product) => (
               <ProductCard key={product.id} product={product} />

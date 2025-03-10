@@ -1,6 +1,24 @@
 .products-page-container {
   display: flex;
   width: 100%;
+  overflow-x: clip;
+}
+
+.alert-message {
+  padding: 10px;
+  border-radius: 5px;
+  background-color: #fb8277;
+  color: white;
+  position: fixed;
+  z-index: 5;
+  right: 20px;
+  /* transform: translateX(150%); */
+  right: -200px;
+  transition: right 0.5s ease;
+}
+
+.visible {
+  right: 20px;
 }
 
 .filter-products-container {
@@ -15,6 +33,7 @@
 }
 
 .search-products-container {
+  overflow-x: clip;
   flex-grow: 1;
   padding: 20px;
   box-sizing: border-box;
@@ -79,6 +98,7 @@
   border: none;
   outline: none;
   margin-right: 10px;
+  font-size:18px;
 }
 
 .search-cluster img:nth-of-type(2) {

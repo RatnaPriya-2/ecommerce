@@ -17,82 +17,84 @@ const AppProvider = ({ children }) => {
 
   const [buttonList, setButtonList] = useState([]);
 
+  const [selectedCategories, setSelectedCategories] = useState([]);
+  const [selectedPrices, setSelectedPrices] = useState([]);
+  const [visible, setVisible] = useState(false);
+
   const handleInput = (e) => {
     setInputValue(e.target.value);
   };
 
   const handleCategory = (e) => {
-    let category = e.target.value;
-    let checked = e.target.checked;
+    const category = e.target.value.toLowerCase();
+    const checked = e.target.checked;
+
     if (checked) {
-      let filteredList = allProducts.filter(
-        (item) => item.category.toLowerCase() === category.toLowerCase()
-      );
-      setFilteredProducts(filteredList);
+      setSelectedCategories((prev) => [...prev, category]);
     } else {
-      setFilteredProducts(allProducts);
+      setSelectedCategories((prev) => prev.filter((cat) => cat !== category));
     }
   };
 
   const handlePrice = (e) => {
-    let highestPrice = e.target.value;
-    let checked = e.target.checked;
-    let priceRange = 250;
-    let lowestPrice = 0;
+    const { value, checked } = e.target;
+    let max = parseInt(value);
+    let min = max - 249;
 
-    if (highestPrice === 250) {
-      lowestPrice = highestPrice - lowestPrice;
-    } else {
-      lowestPrice = highestPrice - priceRange + 1;
-    }
     if (checked) {
-      let filteredList = allProducts.filter(
-        (item) => item.price >= lowestPrice && item.price <= highestPrice
-      );
-
-      setFilteredProducts(filteredList);
+      setSelectedPrices((prev) => [...prev, { min, max }]);
     } else {
-      setFilteredProducts(allProducts);
+      setSelectedPrices((prev) =>
+        prev.filter((range) => !range.min === min && range.max === max)
+      );
     }
   };
 
   useEffect(() => {
-    if (searchTerm) {
-      let filteredList = allProducts.filter((product) =>
-        product.title.toLowerCase().includes(searchTerm.toLowerCase())
+    let filtered = [...allProducts];
+    if (selectedCategories.length > 0) {
+      filtered = filtered.filter((item) =>
+        selectedCategories.includes(item.category.toLowerCase())
       );
-      setFilteredProducts(filteredList);
-    } else {
-      setFilteredProducts(allProducts);
     }
-  }, [searchTerm, allProducts]);
+
+    if (selectedPrices.length > 0) {
+      filtered = filtered.filter((item) =>
+        selectedPrices.some(
+          (range) => item.price >= range.min && item.price <= range.max
+        )
+      );
+    }
+
+    if (searchTerm) {
+      filtered = filtered.filter((item) =>
+        item.title.toLowerCase().includes(searchTerm.toLowerCase().trim())
+      );
+    }
+
+    setFilteredProducts(filtered);
+  }, [searchTerm, allProducts, searchTerm, selectedCategories, selectedPrices]);
 
   const showProducts = (e) => {
     if (e.key === "Enter") {
       setSearchTerm(inputValue);
     }
+    if (e.type === "click") {
+      setSearchTerm(inputValue);
+    }
   };
+
   useEffect(() => {
     if (filteredProducts.length > 0) {
-      // let totalPages;
-      // if (filteredProducts.length > 10) {
-      //   totalPages = Math.ceil(filteredProducts.length / 10);
-      // } else {
-      //   totalPages = 0;
-      // }
-      // let buttonArray = [];
-      // for (let i = 1; i <= totalPages; i++) {
-      //   buttonArray.push(i);
-      // }
-      // setButtonList(buttonArray);
       let totalPages = Math.ceil(filteredProducts.length / 10);
-      let buttonsArray = totalPages > 1 ? [...Array(totalPages)].map((_, i) => i + 1) : [];
+      let buttonsArray =
+        totalPages > 1 ? [...Array(totalPages)].map((_, i) => i + 1) : [];
 
       setButtonList(buttonsArray);
     } else {
       setButtonList([]);
 
-      let totalPages = Math.ceil(filteredProducts.legnth / 10);
+      let totalPages = Math.ceil(filteredProducts.length / 10);
       let buttonsArray = Array.from({ length: totalPages }).map(
         (_, i) => i + 1
       );
@@ -108,22 +110,30 @@ const AppProvider = ({ children }) => {
     let startIndex = (number - 1) * 10;
     let endIndex = number * 10;
     setPageProducts(filteredProducts.slice(startIndex, endIndex));
-    // if (number === 1) {
-    //   setPageProducts(filteredProducts.slice(0, number * 10));
-    // } else {
-    //   if (number === buttonList.length) {
-    //     setPageProducts(filteredProducts.slice(number * 10 - 9));
-    //   } else {
-    //     setPageProducts(
-    //       filteredProducts.slice(number * 10 - 9, number * 10 + 1)
-    //     );
-    //   }
-    // }
   };
 
   const addItem = (product) => {
-    setCartItems((prev) => [...prev, { ...product, quantity: 1 }]);
+    setVisible(true);
+    const alreadyAdded = cartItems.find((item) => item.title === product.title);
+    if (alreadyAdded) {
+      setCartItems((prev) =>
+        prev.map((item) =>
+          item === alreadyAdded
+            ? { ...item, quantity: item.quantity + 1 }
+            : item
+        )
+      );
+    } else {
+      setCartItems((prev) => [...prev, { ...product, quantity: 1 }]);
+    }
   };
+
+  useEffect(() => {
+    let id = setTimeout(() => {
+      setVisible(false);
+    }, 2000);
+    return () => clearTimeout(id);
+  }, [visible]);
 
   const removeItem = (id) => {
     let modifiedList = cartItems.filter((item) => item.id !== id);
@@ -149,6 +159,10 @@ const AppProvider = ({ children }) => {
   const clearInput = () => {
     setInputValue("");
   };
+
+  useEffect(() => {
+    setSearchTerm(inputValue);
+  }, [inputValue]);
 
   useEffect(() => {
     let finalTotal = cartItems
@@ -196,6 +210,7 @@ const AppProvider = ({ children }) => {
           removeItem,
           handleQuantity,
           itemQuantity,
+          visible,
         }}
       >
         {children}
