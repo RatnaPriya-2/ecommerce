@@ -1,4 +1,6 @@
 import { createContext, useContext, useEffect, useState } from "react";
+import usePaginationButtons from "./hooks/usePaginationButtons";
+import useCart from "./hooks/useCart";
 
 const AppContext = createContext();
 
@@ -7,19 +9,15 @@ const AppProvider = ({ children }) => {
   const [filteredProducts, setFilteredProducts] = useState([]);
   const [inputValue, setInputValue] = useState("");
   const [searchTerm, setSearchTerm] = useState("");
-  const [cartItems, setCartItems] = useState(
-    JSON.parse(localStorage.getItem("ecommerce")) || []
-  );
-  const [itemQuantity, setItemQuantity] = useState(1);
-  const [total, setTotal] = useState("");
-
-  const [pageProducts, setPageProducts] = useState([]);
-
-  const [buttonList, setButtonList] = useState([]);
 
   const [selectedCategories, setSelectedCategories] = useState([]);
   const [selectedPrices, setSelectedPrices] = useState([]);
-  const [visible, setVisible] = useState(false);
+
+  const { pageProducts, buttonList, displayPage } =
+    usePaginationButtons(filteredProducts);
+
+  const { addItem, removeItem, handleQuantity, visible, total, cartItems } =
+    useCart();
 
   const handleInput = (e) => {
     setInputValue(e.target.value);
@@ -84,78 +82,6 @@ const AppProvider = ({ children }) => {
     }
   };
 
-  useEffect(() => {
-    if (filteredProducts.length > 0) {
-      let totalPages = Math.ceil(filteredProducts.length / 10);
-      let buttonsArray =
-        totalPages > 1 ? [...Array(totalPages)].map((_, i) => i + 1) : [];
-
-      setButtonList(buttonsArray);
-    } else {
-      setButtonList([]);
-
-      let totalPages = Math.ceil(filteredProducts.length / 10);
-      let buttonsArray = Array.from({ length: totalPages }).map(
-        (_, i) => i + 1
-      );
-
-      setButtonList(buttonsArray);
-    }
-    filteredProducts.length > 0
-      ? setPageProducts(filteredProducts.slice(0, 10))
-      : setPageProducts([]);
-  }, [filteredProducts]);
-
-  const displayPage = (number) => {
-    let startIndex = (number - 1) * 10;
-    let endIndex = number * 10;
-    setPageProducts(filteredProducts.slice(startIndex, endIndex));
-  };
-
-  const addItem = (product) => {
-    setVisible(true);
-    const alreadyAdded = cartItems.find((item) => item.title === product.title);
-    if (alreadyAdded) {
-      setCartItems((prev) =>
-        prev.map((item) =>
-          item === alreadyAdded
-            ? { ...item, quantity: item.quantity + 1 }
-            : item
-        )
-      );
-    } else {
-      setCartItems((prev) => [...prev, { ...product, quantity: 1 }]);
-    }
-  };
-
-  useEffect(() => {
-    let id = setTimeout(() => {
-      setVisible(false);
-    }, 2000);
-    return () => clearTimeout(id);
-  }, [visible]);
-
-  const removeItem = (id) => {
-    let modifiedList = cartItems.filter((item) => item.id !== id);
-    setCartItems(modifiedList);
-  };
-
-  const handleQuantity = (id, change) => {
-    setCartItems((prev) =>
-      prev.map((item) =>
-        item.id === id
-          ? {
-              ...item,
-              quantity:
-                change === -1 && item.quantity === 1
-                  ? 1
-                  : item.quantity + change,
-            }
-          : item
-      )
-    );
-  };
-
   const clearInput = () => {
     setInputValue("");
   };
@@ -163,14 +89,6 @@ const AppProvider = ({ children }) => {
   useEffect(() => {
     setSearchTerm(inputValue);
   }, [inputValue]);
-
-  useEffect(() => {
-    let finalTotal = cartItems
-      .reduce((acc, item) => acc + item.price * item.quantity, 0)
-      .toFixed(2);
-    setTotal(finalTotal);
-    localStorage.setItem("ecommerce", JSON.stringify(cartItems));
-  }, [cartItems]);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -209,7 +127,6 @@ const AppProvider = ({ children }) => {
           total,
           removeItem,
           handleQuantity,
-          itemQuantity,
           visible,
         }}
       >
