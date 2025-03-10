@@ -1,8 +1,10 @@
-import React from "react";
+import React, { useContext } from "react";
 import { NavLink } from "react-router-dom";
 import "../css/Navbar.css";
+import { useGlobalContext } from "./Context";
 
 const Navbar = () => {
+  const { cartItems } = useGlobalContext();
   return (
     <nav className="navbar">
       <div className="logo">
@@ -50,7 +52,7 @@ const Navbar = () => {
             <img className="cart-img" src="/cart.png" alt="cart" />
           </NavLink>
           <span className="cart-badge" id="cart-count">
-            0
+            {cartItems.length}
           </span>
         </li>
       </ul>

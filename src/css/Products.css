@@ -1,0 +1,141 @@
+.products-page-container {
+  display: flex;
+  width: 100%;
+}
+
+.filter-products-container {
+  min-width: 250px;
+  padding: 20px 20px 20px 50px;
+  background-color: #1e293b;
+  color: #bae0bd;
+  height: 100vh;
+  box-sizing: border-box;
+  /* border-top: 1px solid #c1bfbf; Add a darker separator line */
+  box-shadow: 0 -2px 2px -2px #bae0bd;
+}
+
+.search-products-container {
+  flex-grow: 1;
+  padding: 20px;
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  background-color: #f8f9fa;
+}
+
+.filter-by-category-container,
+.filter-by-price-container {
+  margin-bottom: 20px;
+}
+
+.filter-by-category-container span,
+.filter-by-price-container span {
+  display: block;
+  margin-bottom: 20px;
+  font-weight: 500;
+  color: #ff6f61;
+  font-size: 18px;
+}
+
+.filter-by-category-container {
+  margin-bottom: 30px;
+}
+
+.checkbox-block {
+  margin-bottom: 10px;
+}
+
+.checkbox-block label {
+  margin-left: 5px;
+  color: #bae0bd;
+}
+
+.search-block {
+  margin-bottom: 20px;
+}
+
+.search-block label {
+  display: block;
+  margin-bottom: 15px;
+  font-size: 18px;
+  font-weight: 500;
+  color: #1e293b;
+}
+
+.search-cluster {
+  width: 50%;
+  max-width: 500px;
+  display: flex;
+  align-items: center;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  padding: 5px 10px;
+  background-color: white;
+  min-height: 35px;
+}
+
+.search-cluster input[type="text"] {
+  flex-grow: 1;
+  border: none;
+  outline: none;
+  margin-right: 10px;
+}
+
+.search-cluster img:nth-of-type(2) {
+  width: 32px;
+  height: 32px;
+  cursor: pointer;
+  /* margin-left: 10px; */
+}
+
+.cross-img {
+  cursor: pointer;
+  width: 20px;
+  height: 20px;
+  margin-right: 10px;
+}
+
+.products-block {
+  flex-grow: 1;
+}
+
+.products-list {
+  /* border: 1px solid #eee; */
+  background-color: white;
+  /* padding: 10px; */
+  margin-bottom: 10px;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: flex-start;
+  gap: 30px;
+}
+
+.pages {
+  display: flex;
+  gap: 20px;
+  align-items: center;
+  justify-content: center;
+}
+
+.page-number {
+  width: 40px;
+  height: 40px;
+  border: none;
+  border-radius: 5px;
+  background-color: #ff6f61;
+  color: white;
+  cursor: pointer;
+}
+
+/* checkbox button styling adjustments for better visibility */
+
+.checkbox-block input[type="checkbox"] {
+  accent-color: #ffeb3b; /* Light Blue Accent */
+  transform: scale(1.1);
+  margin-right: 10px;
+}
+
+.checkbox-block label:hover {
+  color: #ffeb3b; /* Lighter Blue Hover */
+  cursor: pointer;
+}
