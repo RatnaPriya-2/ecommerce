@@ -7,7 +7,13 @@ const ProductCard = ({ product }) => {
   const { addItem } = useGlobalContext();
   return (
     <div className="product-card">
-      <img src={product.image} alt={product.title} className="product-image" />
+      <div className="image-div">
+        <img
+          src={product.image}
+          alt={product.title}
+          className="product-image"
+        />
+      </div>
 
       <div className="product-details">
         <p className="product-category">
