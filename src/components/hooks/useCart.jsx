@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { toast } from "react-toastify";
 
 const useCart = (user) => {
@@ -63,7 +63,15 @@ const useCart = (user) => {
     localStorage.setItem("ecommerce", JSON.stringify(cartItems));
   }, [cartItems]);
 
-  return { addItem, removeItem, handleQuantity, visible, total, cartItems,setCartItems };
+  return {
+    addItem,
+    removeItem,
+    handleQuantity,
+    visible,
+    total,
+    cartItems,
+    setCartItems,
+  };
 };
 
 export default useCart;
