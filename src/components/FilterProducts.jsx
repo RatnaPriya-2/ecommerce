@@ -4,7 +4,7 @@ import { useGlobalContext } from "./Context";
 const FilterProducts = () => {
   const { handleCategory, handlePrice } = useGlobalContext();
   return (
-    <div className="filter-products-container">
+    <>
       <div className="filter-by-category-container">
         <span>Filter by Category</span>
         <div className="checkbox-block">
@@ -91,7 +91,7 @@ const FilterProducts = () => {
           <label htmlFor="1000">$751 - $1000</label>
         </div>
       </div>
-    </div>
+    </>
   );
 };
 

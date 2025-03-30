@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
+import { toast } from "react-toastify";
 
-const useCart = () => {
+const useCart = (user) => {
   const [cartItems, setCartItems] = useState(
     JSON.parse(localStorage.getItem("ecommerce")) || []
   );
@@ -8,6 +9,10 @@ const useCart = () => {
   const [total, setTotal] = useState("");
   const [visible, setVisible] = useState(false);
   const addItem = (product) => {
+    if (!user) {
+      toast.error("Login to continue...");
+      return;
+    }
     setVisible(true);
     const alreadyAdded = cartItems.find((item) => item.title === product.title);
     if (alreadyAdded) {
@@ -58,7 +63,7 @@ const useCart = () => {
     localStorage.setItem("ecommerce", JSON.stringify(cartItems));
   }, [cartItems]);
 
-  return { addItem, removeItem, handleQuantity, visible, total ,cartItems};
+  return { addItem, removeItem, handleQuantity, visible, total, cartItems,setCartItems };
 };
 
 export default useCart;

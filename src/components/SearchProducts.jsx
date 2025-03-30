@@ -13,11 +13,12 @@ const SearchProducts = () => {
     filteredProducts,
     buttonList,
     displayPage,
+    activeIndex,
+
     pageProducts,
     showProducts,
     visible,
   } = useGlobalContext();
-  console.log(filteredProducts, pageProducts, buttonList);
 
   return (
     <div className="search-products-container">
@@ -61,8 +62,10 @@ const SearchProducts = () => {
             buttonList.map((item, index) => (
               <button
                 key={index}
-                className="page-number"
-                onClick={() => displayPage(item)}
+                className={`page-number ${
+                  index === activeIndex ? "active" : ""
+                }`}
+                onClick={() => displayPage(index, item)}
               >
                 {item}
               </button>

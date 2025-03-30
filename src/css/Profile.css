@@ -1,0 +1,41 @@
+.profile-container {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: flex-start;
+  gap: 20px;
+  text-align: center;
+  margin: auto;
+  width: 300px;
+  height: max-content;
+  padding: 20px;
+  border: 1px solid #ddd;
+  border-radius: 10px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  background-color: #fff;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  color: #1e293b;
+}
+h2 {
+  color: #1e293b;
+}
+
+.logout-button {
+  width: 100%;
+  /* margin-top: 20px; */
+  padding: 8px 16px;
+  background-color: #ff6f61;
+  color: #fff;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.logout-button:hover {
+  background: #fd6253;
+  transform: scale(0.98);
+}
