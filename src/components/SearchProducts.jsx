@@ -6,15 +6,12 @@ import { useGlobalContext } from "./Context";
 
 const SearchProducts = () => {
   const {
-    allProducts,
     handleInput,
     inputValue,
     clearInput,
-    filteredProducts,
     buttonList,
     displayPage,
     activeIndex,
-
     pageProducts,
     showProducts,
     visible,

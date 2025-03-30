@@ -94,7 +94,7 @@ const AppProvider = ({ children }) => {
     }
 
     setFilteredProducts(filtered);
-  }, [searchTerm, allProducts, searchTerm, selectedCategories, selectedPrices]);
+  }, [searchTerm, allProducts, selectedCategories, selectedPrices]);
 
   const showProducts = (e) => {
     if (e.key === "Enter") {

@@ -50,7 +50,7 @@ const Profile = () => {
 
     // Cleanup the listener on unmount
     return () => unsubscribe();
-  }, []);
+  });
 
   return (
     <>
