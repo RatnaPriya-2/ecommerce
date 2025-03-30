@@ -8,7 +8,7 @@ const Home = () => {
     <>
       <div className="home-container">
         <div className="home">
-          <h1>Welcome to Ecommerce</h1>
+          <h1>Welcome to TrendiKart</h1>
           <p>Your one-stop destination for trendy and affordable fashion.</p>
           <p>
             Shop the latest styles, get amazing deals, and enjoy a seamless
