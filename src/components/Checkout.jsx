@@ -15,7 +15,7 @@ const Checkout = () => {
 
   const displayRazorpay = async () => {
     const isLoaded = await loadScript(
-      "https://checkout.razorpay.com/v1/checkout.js"
+      `https://checkout.razorpay.com/v1/checkout.js?v=${Date.now()}`
     );
 
     if (!isLoaded) {
