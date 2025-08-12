@@ -24,7 +24,7 @@ const Checkout = () => {
     }
 
     const options = {
-      key: "rzp_test_k5f9N2JvjTZpRs",
+      key: "rzp_test_0qp2KdFnELV7iU",
       amount: total * 100, // Amount in paise (50000 paise = ₹500)
       currency: "INR",
       name: "Demo Payment",
